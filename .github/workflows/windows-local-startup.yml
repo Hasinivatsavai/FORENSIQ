@@ -1,0 +1,19 @@
+name: Windows local startup and reinstall
+on: workflow_dispatch
+permissions:
+  contents: read
+
+jobs:
+  startup:
+    runs-on: windows-2022
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+          architecture: x64
+      - name: Install locked dependencies
+        run: npm.cmd ci
+      - name: Verify SQLite startup, saved case and restart
+        run: python .github/workflows/check_windows_startup.py

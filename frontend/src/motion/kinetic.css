@@ -1,0 +1,86 @@
+.fq-ink {
+  --flow-x: 0px;
+  --flow-y: 0px;
+  position: fixed;
+  z-index: 0;
+  inset: 0;
+  pointer-events: none;
+  overflow: hidden;
+  contain: strict;
+  background:
+    radial-gradient(ellipse at 0 5%, var(--aura), transparent 52%),
+    radial-gradient(ellipse at 98% 38%, var(--violet-glow), transparent 62%),
+    var(--paper);
+}
+/* A fixed grain tile gives the pigment and substrate a common texture. */
+.fq-ink::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  opacity: 0.046;
+  background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='g'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.82' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23g)'/%3E%3C/svg%3E") repeat;
+}
+.fq-ink__field {
+  display: block;
+  width: 100%;
+  height: 100%;
+  opacity: 0;
+}
+.fq-ink--gl .fq-ink__field {
+  opacity: 1;
+}
+.fq-ink--gl .fq-ink__photo {
+  visibility: hidden;
+}
+.fq-ink__photo {
+  position: absolute;
+  background: url('/art/crimson-suspension.webp') center / 100% 100% no-repeat;
+  transition: translate 0.8s ease-out;
+  will-change: transform;
+}
+.fq-ink__photo--left {
+  width: 74vh;
+  height: 118vh;
+  left: -37vh;
+  bottom: -44vh;
+  opacity: 0.64;
+  translate: var(--flow-x) var(--flow-y);
+  transform: rotate(-28deg);
+  animation: fq-ink-left 18s ease-in-out infinite alternate;
+}
+.fq-ink__photo--right {
+  width: 65vh;
+  height: 94vh;
+  right: -32vh;
+  bottom: -44vh;
+  opacity: 0.52;
+  translate: calc(-1 * var(--flow-x)) calc(-1 * var(--flow-y));
+  transform: rotate(57deg);
+  animation: fq-ink-right 16s ease-in-out infinite alternate;
+}
+@keyframes fq-ink-left {
+  to {
+    transform: translate(4%, -3%) rotate(-23deg) scale(1.06);
+  }
+}
+@keyframes fq-ink-right {
+  to {
+    transform: translate(-4%, 3%) rotate(51deg) scale(1.08);
+  }
+}
+:root[data-theme='dark'] .fq-ink__photo {
+  filter: saturate(1.5) brightness(2.05);
+}
+@media (max-width: 600px) {
+  .fq-ink__photo--left { left: -53vh; }
+  .fq-ink__photo--right { right: -49vh; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .fq-ink__photo {
+    animation: none;
+    transition: none;
+    translate: none;
+    will-change: auto;
+  }
+}

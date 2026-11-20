@@ -1,0 +1,16 @@
+services:
+  - type: web
+    name: forensiq
+    runtime: docker
+    plan: starter
+    dockerfilePath: ./Dockerfile
+    healthCheckPath: /api/health
+    disk:
+      name: forensiq-data
+      mountPath: /service/data
+      sizeGB: 1
+    envVars:
+      - key: FORENSIQ_DB_PATH
+        value: /service/data/forensiq.sqlite3
+      - key: COOKIE_SECURE
+        value: "true"
